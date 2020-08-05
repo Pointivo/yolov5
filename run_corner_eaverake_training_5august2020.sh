@@ -1,6 +1,6 @@
 python train.py \
 --cfg=models/yolov5x.yaml \
---data=penetration.yaml \
+--data=corner_eave_rake.yaml \
 --epochs=50 \
 --batch-size=3 \
 --img-size=1024 \

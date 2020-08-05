@@ -7,4 +7,4 @@ val: /home/ubuntu/yolov5/data/val/images/
 nc: 1
 
 # class names
-names: ['penetration']
+names: ['corner-eave-rake']
