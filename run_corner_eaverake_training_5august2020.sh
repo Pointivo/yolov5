@@ -6,7 +6,7 @@ python train.py \
 --cfg=models/yolov5x.yaml \
 --data=corner_eave_rake.yaml \
 --epochs=50 \
---batch-size=3 \
+--batch-size=18 \
 --img-size=640 \
 --weights=weights/yolov5x.pt \
 |& tee -a /home/pointivo/asim/yolov5/training.logs
