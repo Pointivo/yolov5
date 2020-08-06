@@ -1,7 +1,7 @@
 # path of train and val dataset. The code automatically replaces 'images' keyword with 'labels' in path below
 # to get annotation labels.
-train: /home/ubuntu/yolov5/data/train/images/
-val: /home/ubuntu/yolov5/data/val/images/
+train: /home/pointivo/asim/corner_eave_rake_data/train/images/
+val: /home/pointivo/asim/corner_eave_rake_data/val/images/
 
 # number of classes
 nc: 1
