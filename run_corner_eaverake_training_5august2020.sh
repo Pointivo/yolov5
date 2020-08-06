@@ -8,5 +8,6 @@ python train.py \
 --epochs=50 \
 --batch-size=18 \
 --img-size=640 \
+--noaugment \
 --weights=weights/yolov5x.pt \
 |& tee -a /home/pointivo/asim/yolov5/training.logs

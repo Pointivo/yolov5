@@ -181,7 +181,7 @@ def train(hyp, tb_writer, opt, device):
         model = DDP(model, device_ids=[rank], output_device=rank)
 
     # Trainloader
-    dataloader, dataset = create_dataloader(train_path, imgsz, batch_size, gs, opt, hyp=hyp, augment=True,
+    dataloader, dataset = create_dataloader(train_path, imgsz, batch_size, gs, opt, hyp=hyp, augment=not opt.noaugment,
                                             cache=opt.cache_images, rect=opt.rect, local_rank=rank,
                                             world_size=opt.world_size)
     mlc = np.concatenate(dataset.labels, 0)[:, 0].max()  # max label class
@@ -377,7 +377,7 @@ def train(hyp, tb_writer, opt, device):
 
                 # Save last, best and delete
                 torch.save(ckpt, last)
-                if best_fitness == fi: 
+                if best_fitness == fi:
                     torch.save(ckpt, best)
                 del ckpt
         # end epoch ----------------------------------------------------------------------------------------------------
@@ -412,6 +412,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch-size', type=int, default=16, help="Total batch size for all gpus.")
     parser.add_argument('--img-size', nargs='+', type=int, default=[640, 640], help='train,test sizes')
     parser.add_argument('--rect', action='store_true', help='rectangular training')
+    parser.add_argument('--noaugment', action='store_true', help='whether to not use mosaic augmentation')
     parser.add_argument('--resume', nargs='?', const='get_last', default=False,
                         help='resume from given path/to/last.pt, or most recent run if blank.')
     parser.add_argument('--nosave', action='store_true', help='only save final checkpoint')
