@@ -6,7 +6,8 @@ import torch
 import onnxruntime as rt
 import numpy as np
 
-from lambda_utils import numpyy_non_max_suppression
+from lambda_utils import numpy_non_max_suppression
+from utils.utils import non_max_suppression
 
 class_names = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
                'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow',
@@ -22,7 +23,6 @@ class_names = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'tra
 
 
 from Lambda.bin.prediction_simple import read_image, parse_input_args, generate_visualization
-from utils.utils import non_max_suppression
 
 
 def get_session(model_file):
@@ -56,9 +56,9 @@ def main():
 
     res = sess.run(None, {input_name: to_numpy(image_tensor)})
     batch_detections = torch.from_numpy(np.array(res[0]))
-    batch_detections = non_max_suppression(batch_detections, conf_thres=0.4, iou_thres=0.5, agnostic=False)
-    # pred = numpyy_non_max_suppression(prediction=batch_detections, conf_thres=0.4, iou_thres=0.5)
-
+    # batch_detections = non_max_suppression(batch_detections, conf_thres=0.4, iou_thres=0.5, agnostic=False)
+    batch_detections = numpy_non_max_suppression(predictions=batch_detections, conf_thres=0.4, iou_thres=0.5)
+    batch_detections = torch.from_numpy(np.array(batch_detections))
     image = generate_visualization(prediction=batch_detections, image_tensor=image_tensor, image=original_image,
                                    class_names=class_names)
     print(f'Result = {res}')

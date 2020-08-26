@@ -19,7 +19,7 @@ def parse_input_args():
                         help='model.pt path(s)')
     parser.add_argument('--output', type=str, default='/tmp/output', help='output folder')  # output folder
     parser.add_argument('--image', '-i', type=str, default='/home/fakhir/repos/yolov5/inference/images/bus.jpg',
-                        help='output folder')  # output folder
+                        help='input image')  # output folder
     parser.add_argument('--img_size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--view_img', action='store_true', help='display results')
     opt = parser.parse_args()
@@ -35,7 +35,7 @@ def predict(image: np.array, model: Model):
 
 def read_image(image_path: Path, image_size: int = 640) -> Tuple[np.ndarray, torch.tensor]:
     img0 = cv2.imread(str(image_path))  # BGR
-    img = letterbox(img0, new_shape=image_size)[0]
+    img = letterbox(img0, new_shape=(image_size, image_size))[0]
     # Convert
     img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB, to 3x416x416
     img = np.ascontiguousarray(img)

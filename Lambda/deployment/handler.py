@@ -7,6 +7,8 @@ from json import JSONEncoder
 import time
 from pathlib import Path
 
+from lambda_utils import numpy_non_max_suppression
+
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 logger.info('System modules have been loaded properly.')
@@ -128,9 +130,10 @@ def detect_onnx(event, context):
 
         # inference
         input_name = session.get_inputs()[0].name
-        predictions = session.run(None, {input_name: image})
-        predictions = predictions[0]
-        logger.info(f'Time taken for prediction only = {time.time() - image_load_time}')
+        model_output = session.run(None, {input_name: image})
+        model_output = model_output[0]
+        predictions = numpy_non_max_suppression(predictions=model_output, conf_thres=0.4, iou_thres=0.5)
+        logger.info(f'Time taken for prediction and nms = {time.time() - image_load_time}')
         return return_lambda_gateway_response(code=200,
                                               body={'predictions': predictions})
     except Exception as e:
