@@ -3,6 +3,6 @@ python train.py \
 --data=penetration.yaml \
 --epochs=50 \
 --batch-size=4 \
---img-size=800 \
+--img-size=1024 \
 --weights=weights/yolov5x.pt \
 |& tee -a /home/ubuntu/yolov5/yolov5/training.logs
