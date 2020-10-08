@@ -2,7 +2,7 @@ python train.py \
 --cfg=models/yolov5x.yaml \
 --data=penetration.yaml \
 --epochs=50 \
---batch-size=3 \
+--batch-size=9 \
 --img-size=1024 \
 --weights=weights/yolov5x.pt \
 |& tee -a /home/ubuntu/yolov5/yolov5/training.logs
